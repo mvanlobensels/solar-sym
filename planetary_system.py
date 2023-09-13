@@ -6,15 +6,6 @@ from matplotlib import animation
 class CelestialBody:
 
     def __init__(self, name: str, mass: float, position, velocity) -> None:
-        """
-        Celestial body class.
-
-        Args:
-            name (str): Body name
-            mass (float): Body mass (kg)
-            position (ArrayLike[float]): position [x (m), y (m)]
-            velocity (ArrayLike[float]): velocity [v_x (m/s), v_y (m/s)]
-        """
         self._name = name
         self._mass = mass
 
@@ -32,11 +23,6 @@ class PlanetarySystem:
         self.bodies = bodies
 
     def update_state(self, dt: float):
-        """_summary_
-
-        Args:
-            dt (float): _description_
-        """
         for body in self.bodies:
             F = 0
 
@@ -71,8 +57,8 @@ class PlanetarySystem:
 
             return artists
 
-        ax.set_xlim(-6 * self.AU, 6 * self.AU)
-        ax.set_ylim(-6 * self.AU, 6 * self.AU)
+        ax.set_xlim(-6*self.AU, 6*self.AU)
+        ax.set_ylim(-6*self.AU, 6*self.AU)
         ax.grid()
 
         anim = animation.FuncAnimation(fig, func=update, frames=len(self.bodies[0].path), interval=1, blit=True)
