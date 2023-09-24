@@ -72,7 +72,6 @@ class System:
             for k in range(0, len(self._bodies)*3, 3):
                 body = self._bodies[k//3]
                 trajectory = np.array(body.trajectory)[:i]
-                # artists[k].set_data(*list(zip(*trajectory)))
                 artists[k].set_data(*trajectory.T)
                 artists[k+1].set_data(*body.trajectory[i])
                 artists[k+2].set_position((body.trajectory[i][0], body.trajectory[i][1]))
