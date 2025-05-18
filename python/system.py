@@ -19,7 +19,7 @@ class Body:
 
         self.position = np.array(position, dtype=float)
         self.velocity = np.array(velocity, dtype=float)
-        self.trajectory = []
+        self.trajectory = np.array(position)  # Initialize as empty 2D numpy array
 
 
 class System:
@@ -53,7 +53,7 @@ class System:
             body.acceleration = F / body._mass
             body.velocity += body.acceleration * dt
             body.position += body.velocity * dt
-            body.trajectory.append(body.position.tolist())
+            body.trajectory = np.vstack((body.trajectory, body.position))
 
     def plot(self) -> None:
         """Plot evolution of the system.
@@ -62,8 +62,7 @@ class System:
 
         artists = []
         for body in self._bodies:
-
-            path_body,     = ax.plot([], [], '-g', lw=1, c='black')
+            path_body,     = ax.plot([], [], lw=1, color='black')
             position_body, = ax.plot([self.AU], [0], marker="o", markersize=4, markeredgecolor="blue", markerfacecolor="blue")
             text_body      = ax.text(self.AU, 0, body._name)
             artists.extend([path_body, position_body, text_body])
@@ -71,10 +70,11 @@ class System:
         def update(i):
             for k in range(0, len(self._bodies)*3, 3):
                 body = self._bodies[k//3]
-                trajectory = np.array(body.trajectory)[:i]
+                trajectory = body.trajectory[:i]
                 artists[k].set_data(*trajectory.T)
-                artists[k+1].set_data(*body.trajectory[i])
-                artists[k+2].set_position((body.trajectory[i][0], body.trajectory[i][1]))
+                pos = body.trajectory[i]
+                artists[k+1].set_data([pos[0]], [pos[1]])
+                artists[k+2].set_position(pos)
 
             return artists
 

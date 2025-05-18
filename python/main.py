@@ -23,15 +23,15 @@ solar_system = System([
 # ])
 
 # # Three-body problem
-# three_body_system = System([
-#     Body(name='A', mass=1, position=[-0.97000436, 0.24308753], velocity=[0.4662036850, 0.4323657300]),
-#     Body(name='B', mass=1, position=[0, 0], velocity=[-0.93240737, -0.86473146]),
-#     Body(name='C', mass=1, position=[0.97000436, -0.24308753], velocity=[0.4662036850, 0.4323657300]),
-#     Body(name='Planet', mass=0.001, position=[-0.33, -0.3], velocity=[0, 0])
-# ])
-# three_body_system.G = 1
-# dt = 0.001
-# t_end = 10
+three_body_system = System([
+    Body(name='A', mass=1, position=[-0.97000436, 0.24308753], velocity=[0.4662036850, 0.4323657300]),
+    Body(name='B', mass=1, position=[0, 0], velocity=[-0.93240737, -0.86473146]),
+    Body(name='C', mass=1, position=[0.97000436, -0.24308753], velocity=[0.4662036850, 0.4323657300]),
+    Body(name='Planet', mass=0.001, position=[-0.33, -0.3], velocity=[0, 0])
+])
+three_body_system.G = 1
+dt = 0.001
+t_end = 10
 
 system = solar_system
 
