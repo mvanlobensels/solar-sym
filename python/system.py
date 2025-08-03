@@ -63,7 +63,7 @@ class System:
         artists = []
         for body in self._bodies:
 
-            path_body,     = ax.plot([], [], '-g', lw=1, c='black')
+            path_body,     = ax.plot([], [], lw=1, c='black')
             position_body, = ax.plot([self.AU], [0], marker="o", markersize=4, markeredgecolor="blue", markerfacecolor="blue")
             text_body      = ax.text(self.AU, 0, body._name)
             artists.extend([path_body, position_body, text_body])
@@ -73,7 +73,7 @@ class System:
                 body = self._bodies[k//3]
                 trajectory = np.array(body.trajectory)[:i]
                 artists[k].set_data(*trajectory.T)
-                artists[k+1].set_data(*body.trajectory[i])
+                artists[k+1].set_data([body.trajectory[i][0]], [body.trajectory[i][1]])
                 artists[k+2].set_position((body.trajectory[i][0], body.trajectory[i][1]))
 
             return artists

@@ -2,8 +2,21 @@
 
 N-body simulator
 
+## Build
+```bash
+mkdir build
+cd build
+cmake ..
+make
+```
+
+## Install
+```bash
+pip3 install -r requirements.txt
+```
+
 ## Run
 
 ```bash
-python main.py
+python python/main.py
 ```
