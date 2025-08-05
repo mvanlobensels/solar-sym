@@ -8,7 +8,7 @@
 namespace py = pybind11;
 
 PYBIND11_MODULE(solar_sym, m) {
-    py::class_<Body>(m, "Body")
+    py::class_<Body>(m, "Body", py::dynamic_attr())
         .def(py::init([](const std::string& name,
                          double mass,
                          py::object position,
@@ -38,10 +38,25 @@ PYBIND11_MODULE(solar_sym, m) {
         .def_property_readonly("mass", &Body::mass)
         .def_readwrite("position", &Body::position_)
         .def_readwrite("velocity", &Body::velocity_)
-        .def_readwrite("trajectory", &Body::trajectory_);
+        .def_readwrite("trajectory", &Body::trajectory_)
+        .def("cache_trajectory", [](py::object self) {
+            Body& b = self.cast<Body&>();
+
+            size_t N = b.trajectory_.size();
+            Eigen::MatrixXd mat(N, 2);
+
+            for (size_t i = 0; i < N; ++i) {
+                mat(i, 0) = b.trajectory_[i].x();
+                mat(i, 1) = b.trajectory_[i].y();
+            }
+
+            self.attr("cached_trajectory") = py::cast(mat);
+        });
 
     py::class_<System>(m, "System")
         .def(py::init<std::vector<Body>>())
         .def("update_state", &System::update_state)
-        .def_readwrite("bodies", &System::bodies_);
+        .def_readwrite("bodies", &System::bodies_)
+        .def_property_readonly("G", [](const System& self) { return self.G; })
+        .def_property_readonly("AU", [](const System& self) { return self.AU; });
 }

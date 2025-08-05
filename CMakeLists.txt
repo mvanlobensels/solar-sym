@@ -12,7 +12,6 @@ target_include_directories(solar_sym PRIVATE header)
 
 # Add source files
 set(SOURCES
-    src/main.cpp
     src/system.cpp
 )
 
@@ -21,5 +20,3 @@ include_directories(
     header
     /usr/include/eigen3
 )
-
-add_executable(solar-sym ${SOURCES})

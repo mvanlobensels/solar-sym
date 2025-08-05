@@ -3,6 +3,9 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'build')))
 
 from solar_sym import Body, System
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import animation
 
 AU = 1.5e11                 # Earth-Sun distance
 Me = 5.972e24               # Earth mass
@@ -44,4 +47,35 @@ while t < t_end:
     system.update_state(dt)
     t += dt
 
-system.plot()
+# Make copy
+bodies = system.bodies
+
+for body in bodies:
+    body.cache_trajectory()
+
+fig, ax = plt.subplots(figsize=(8,8))
+
+artists = []
+for body in bodies:
+
+    path_body,     = ax.plot([], [], lw=1, c='black')
+    position_body, = ax.plot([system.AU], [0], marker="o", markersize=4, markeredgecolor="blue", markerfacecolor="blue")
+    text_body      = ax.text(system.AU, 0, body.name)
+    artists.extend([path_body, position_body, text_body])
+
+def update(i):
+    for k in range(0, len(bodies)*3, 3):
+        body = bodies[k//3]
+        trajectory = np.array(body.cached_trajectory)[:i]
+        artists[k].set_data(*trajectory.T)
+        artists[k+1].set_data([body.cached_trajectory[i][0]], [body.cached_trajectory[i][1]])
+        artists[k+2].set_position((body.cached_trajectory[i][0], body.cached_trajectory[i][1]))
+
+    return artists
+
+ax.set_xlim(-6*system.AU, 6*system.AU)
+ax.set_ylim(-6*system.AU, 6*system.AU)
+ax.grid()
+
+anim = animation.FuncAnimation(fig, func=update, frames=len(bodies[0].cached_trajectory), interval=1, blit=True)
+plt.show()
