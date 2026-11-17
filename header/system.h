@@ -8,13 +8,11 @@
 class System
 {
 public:
-    /* Constants */
     const double G = 6.67e-11;
     const double AU = 1.5e11;
 
     std::vector<Body> bodies_;
 
-    /* Constructor */
     System(std::vector<Body> bodies) : bodies_(bodies) {};
 
     /**
@@ -23,5 +21,5 @@ public:
      * 
      * @param dt Time step in seconds.
      */
-    void update_state(double dt);
+    void step(double dt);
 };

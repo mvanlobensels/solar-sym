@@ -1,22 +1,31 @@
-cmake_minimum_required(VERSION 3.10)
-project(solar-sym)
+cmake_minimum_required(VERSION 3.14)
+project(solar-sym C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(pybind11 REQUIRED)
-find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+find_package(Eigen3 3.3 REQUIRED NO_MODULE)
+find_package(OpenGL REQUIRED)
+find_package(GLEW REQUIRED)
 
-pybind11_add_module(solar_sym src/bindings.cpp src/system.cpp)
-target_include_directories(solar_sym PRIVATE header)
+# GLFW is not installed system-wide, so download and build it with the project.
+include(FetchContent)
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
+FetchContent_Declare(glfw
+    URL https://github.com/glfw/glfw/releases/download/3.4/glfw-3.4.zip
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+)
+FetchContent_MakeAvailable(glfw)
 
-# Add source files
-set(SOURCES
+add_executable(solar-sym
+    src/main.cpp
     src/system.cpp
+    src/renderer.cpp
+    src/galaxy.cpp
 )
 
-# Include directories
-include_directories(
-    header
-    /usr/include/eigen3
-)
+target_include_directories(solar-sym PRIVATE header)
+target_link_libraries(solar-sym PRIVATE Eigen3::Eigen OpenGL::GL GLEW::GLEW glfw)
