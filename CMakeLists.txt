@@ -25,6 +25,7 @@ add_executable(solar-sym
     src/system.cpp
     src/renderer.cpp
     src/galaxy.cpp
+    src/solar_system.cpp
 )
 
 target_include_directories(solar-sym PRIVATE header)

@@ -1,9 +1,10 @@
+#pragma once
+
 #include <string>
 #include <vector>
 #include <Eigen/Dense>
 #include "body.h"
 
-#pragma once
 
 class System
 {

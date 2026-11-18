@@ -10,11 +10,11 @@ System galaxy::make_galaxy(std::size_t n, unsigned seed)
     const double G = 6.67e-11;
     const double pi = std::acos(-1.0);
 
-    const double stellar_mass  = 6e10 * kSolarMass;
-    const double bh_mass       = 4.3e6 * kSolarMass;
-    const double scale_length  = 11'400 * kLightYear;   // ~3.5 kpc
-    const double scale_height  = 1'000 * kLightYear;    // ~300 pc
-    const double max_radius    = 50'000 * kLightYear;
+    const double stellar_mass  = 6e10 * solar_mass;
+    const double bh_mass       = 4.3e6 * solar_mass;
+    const double scale_length  = 11'400 * light_year;   // ~3.5 kpc
+    const double scale_height  = 1'000 * light_year;    // ~300 pc
+    const double max_radius    = 50'000 * light_year;
     const double star_mass     = stellar_mass / static_cast<double>(n);
 
     std::mt19937_64 rng(seed);
