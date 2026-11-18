@@ -13,19 +13,17 @@ int main()
 {
     const double dt = 60 * 60;                  // Time step in seconds (1 hour)
     const int steps_per_frame = 24;             // Simulated time per frame: 1 day
-
-    
     System solar_system = solar_system::make_solar_system();
 
     // Milky Way
-    const std::size_t n_stars = 10000;
+    // const std::size_t n_stars = 10000;
     // const double dt = 1e5 * 365.25 * 86400;   // Time step: 100,000 years
     // const int steps_per_frame = 1;
 
-    std::cout << "Generating " << n_stars << " stars..." << std::endl;
-    System milky_way = galaxy::make_galaxy(n_stars);
+    // std::cout << "Generating " << n_stars << " stars..." << std::endl;
+    // System milky_way = galaxy::make_galaxy(n_stars);
 
-    RenderOptions options;
+    // RenderOptions options;
     // options.length_unit = galaxy::light_year;   // World units are light years
     // options.camera_distance = 120'000.0f;
     // options.trails = false;                     // 1M trails = 1M draw calls per frame
